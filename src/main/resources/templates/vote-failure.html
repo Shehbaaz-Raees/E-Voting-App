@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>thanks page</title>
+    <script>
+		history.pushState(null, null, location.href);
+		window.onpopstate = function () {
+			history.go(1);
+		};
+	</script>
+</head>
+<body>
+    <h1>You have already voted for a candidate</h1>
+    <br>
+    <form action="/logout" method="post">
+	    <input type="submit" value="Logout"/>
+	</form>
+	    
+</body>
+</html>
