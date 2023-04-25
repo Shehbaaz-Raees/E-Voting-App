@@ -6,19 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.votingapp.entity.Candidate;
 import com.example.votingapp.entity.User;
 import com.example.votingapp.repository.CandidateRepository;
 import com.example.votingapp.repository.UserRepository;
+import com.example.votingapp.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
@@ -27,6 +32,37 @@ public class UserController {
 	@Autowired
 	UserRepository userRepository; 
 	
+	@Autowired
+    UserService userService;
+	
+	@PostMapping("/login")
+	public String loginUser(@RequestParam("username") String username,
+	                        @RequestParam("password") String password,
+	                        HttpSession session,
+	                        RedirectAttributes redirectAttributes) {
+	    User existingUser = userService.getUserByUsername(username);
+	    if (existingUser == null) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password");
+	        return "redirect:/";
+	    }
+
+	    if (!existingUser.getPassword().equals(password)) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password");
+	        return "redirect:/";
+	    }
+
+	    session.setAttribute("username", username);
+	    return "redirect:/user";
+	}
+	
+    @PostMapping("/register")
+    public String addNew(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+        userService.addNew(user);
+        redirectAttributes.addFlashAttribute("message", "User registered successfully");
+        return "redirect:/";
+    }
+
+
 	@GetMapping("/hasvoted")
 	public String getHasVotedPage() {
 	    return "has-voted";
@@ -55,11 +91,6 @@ public class UserController {
 	    return "vote-success";
 	}
 	
-//	@GetMapping("/logout")
-//    public String logout(HttpSession session) {
-//        session.invalidate();
-//        return "redirect:/";
-//    }
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 	    HttpSession session = request.getSession(false);
@@ -71,5 +102,4 @@ public class UserController {
 	    response.setDateHeader("Expires", 0);
 	    return "redirect:/";
 	}
-
 }

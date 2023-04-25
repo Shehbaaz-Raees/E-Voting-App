@@ -49,7 +49,7 @@
 <body>
     <div class="box">
         <h1>User Page</h1>
-        <form th:action="@{/vote}" method="post">
+        <form th:action="@{/user/vote}" method="post">
             <ul>
                 <li th:each="candidate : ${candidates}">
                     <li>

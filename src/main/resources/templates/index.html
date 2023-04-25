@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Voting App</title>
+</head>
+<body>
+    <h1>Welcome to the E-Voting App!</h1>
+    <p>Please select your login type:</p>
+    <form th:action="@{/userlogin}" method="get">
+        <button type="submit">User Login</button>
+    </form>
+    <form th:action="@{/adminlogin}" method="get">
+        <button type="submit">Admin Login</button>
+    </form>
+</body>
+</html>

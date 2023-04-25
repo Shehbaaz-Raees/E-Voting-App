@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
+</head>
+<body>
+<h1>Admin Login Page</h1>
+<form action="/admin/login" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" placeholder="USERNAME"><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="PASSWORD"><br><br>
+
+    <input type="submit" value="Login">
+</form>
+<div th:if="${param.logout}" class="alert alert-success">
+    You have been logged out successfully.
+</div>
+<div th:if="${param.error}" class="alert alert-danger">
+    Invalid username or password.
+</div>
+<div th:if="${message}" class="alert alert-success">
+    <p th:text="${message}"></p>
+</div>
+
+<form action="/adminregister" method="GET">
+    <input type="submit" value="Register">
+</form>
+
+<div th:if="${errorMessage != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error:</strong> <span th:text="${errorMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+</body>
+</html>
