@@ -27,6 +27,11 @@ public class Candidate {
 		this.name = name;
 		this.votesCount = votesCount;
 	}
+	
+	public Candidate(String name) {
+	    this.name = name;
+	    this.votesCount = 0;
+	}
 
 	public Candidate() {
 		super();

@@ -3,7 +3,7 @@ package com.example.votingapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,7 @@ import com.example.votingapp.entity.Admin;
 import com.example.votingapp.entity.Candidate;
 import com.example.votingapp.repository.CandidateRepository;
 import com.example.votingapp.service.AdminService;
+import com.example.votingapp.service.CandidateService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,6 +30,9 @@ public class AdminController {
 	
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+    private CandidateService candidateService;
 	
 	@PostMapping("/login")
 	public String loginAdmin(@RequestParam("username") String username,
@@ -63,6 +67,12 @@ public class AdminController {
 	    model.addAttribute("candidates", candidates);
 	    return "admin";
 	}
+	
+	@PostMapping("/add-candidates")
+    public ResponseEntity<String> addHardcodedCandidates() {
+        candidateService.addHardcodedCandidates();
+        return ResponseEntity.ok("Hardcoded candidates added successfully");
+    }
 	
 	@PostMapping("/logout")
 	public String logout(HttpSession session) {

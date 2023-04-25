@@ -16,9 +16,9 @@
             <th>Candidate</th>
             <th>Count</th>
         </tr>
-        <tr th:each="vote : ${votes}">
-    <td th:text="${vote.name}"></td>
-    <td th:text="${vote.votesCount}"></td>
+        <tr th:each="candidates : ${candidates}">
+    <td th:text="${candidates.name}"></td>
+    <td th:text="${candidates.votesCount}"></td>
 </tr>
     </table>
     <form action="/" method="get">
