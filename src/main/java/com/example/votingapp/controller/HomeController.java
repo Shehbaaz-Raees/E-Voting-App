@@ -15,13 +15,7 @@ public class HomeController {
     public String showUserPage() {
     	return "user";
     }
-        
-    @GetMapping("/admin")
-    public String showAdminPage() {
-    	return "admin";
-    }
 
-    
     @GetMapping("/userlogin")
     public String showUserLoginPage() {
     return "userlogin";
