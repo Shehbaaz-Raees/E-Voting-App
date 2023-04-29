@@ -32,8 +32,15 @@ public class AdminController {
 	AdminService adminService;
 	
 	@Autowired
-    private CandidateService candidateService;
-	
+	private CandidateService candidateService;
+
+	@GetMapping
+	public String getCandidates(Model model) {
+		List<Candidate> candidates = candidateRepository.findAll();
+		model.addAttribute("candidates", candidates.toArray());
+		return "admin";
+	}
+
 	@PostMapping("/login")
 	public String loginAdmin(@RequestParam("username") String username,
 	                        @RequestParam("password") String password,
